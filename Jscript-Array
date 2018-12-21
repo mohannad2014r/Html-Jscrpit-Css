@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style type="text/css">
+		.candidates {
+			font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+			border-collapse: collapse;
+			width: 20%;
+		}
+
+		.candidates td, #candidates th {
+			font-weight: bold;
+			font-size: 14px;
+			border: 1px solid #ddd;
+			padding: 8px;
+		}
+
+		.candidates tr:nth-child(even){background-color: #f2f2f2;}
+
+		.candidates tr:hover {background-color: #ddd;}
+
+		.candidates th {
+			font-size: 16px;
+			padding-top: 14px;
+			padding-bottom: 12px;
+			text-align: left;
+			background-color: #4CAF50;
+			color: white;
+		}		
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <div id="container" class="w3-container">
+    <h2> Demo Table Of Candidates <h2>
+		<table class="candidates" id="candidates_example" >
+		  <thead>
+			<tr>
+			  <th>Name</th>
+			  <th>Skills</th>
+			</tr>
+		  </thead>
+		  <tr>
+			<td>Cirpo</td>
+			<td>JavaScript, Docker</td>
+		  </tr>
+		  <tr>
+			<td>Louis</td>
+			<td>Java, AEM</td>
+		  </tr>
+		  <tr>
+			<td>Nermin</td>
+			<td>.NET, Azure</td>
+		  </tr>
+		</table>
+    <h2>JavaScript Candidates <h2>
+  </div>
+  
+  <script type="text/javascript">
+    var newCandidates = [
+      { name: "Kerrie", skills: ["JavaScript", "Docker", "Ruby"] },
+      { name: "Mario", skills: ["Python", "AWS"] },
+      { name: "Jacquline", skills: ["JavaScript", "Azure"] },
+      { name: "Kathy", skills: ["JavaScript", "Java"] },
+      { name: "Anna", skills: ["JavaScript", "AWS"] },
+      { name: "Matt", skills: ["PHP", "AWS"] },
+      { name: "Matt", skills: ["PHP", ".Net", "Docker"] },
+    ];
+
+    function removeRowsFromTable(table) {
+      const rows = table.getElementsByTagName("tr");
+
+      while (rows.length > 1) {
+        table.deleteRow(1);
+      }
+    }
+
+    function insertCandidate(tbody, name, skills) {
+      const newRow = tbody.insertRow();
+      const nameCell = newRow.insertCell();
+      const skillCell = newRow.insertCell();
+
+      const candidateName = document.createTextNode(name);
+      const candidateSkills = document.createTextNode(skills.join(', '));
+
+      nameCell.appendChild(candidateName);
+      skillCell.appendChild(candidateSkills);
+    }
+
+    function addCandidatesToTable(table, candidates) {
+      candidates.forEach(candidate => insertCandidate(table, candidate.name, candidate.skills));
+    }
+	//Running a filter on the Array and separating the JavaScript Skills
+	const myResults =  newCandidates.filter(function(filterResults) {
+		return filterResults.skills.includes("JavaScript");
+	});
+    function filterCandidateBySkill(candidates, skill) {
+      // INSERT YOUR LOGIC HERE   <-------------------------
+	  //Returning myResults
+	  return myResults;
+    }
+
+    const candidatesTable = document.getElementById("candidates_example");
+    const newCandidatesTable = candidatesTable.cloneNode(true);
+
+    removeRowsFromTable(newCandidatesTable);
+    const newTbody = newCandidatesTable.getElementsByTagName('tbody')[0];
+
+    const filteredCandidates = filterCandidateBySkill(newCandidates, 'JavaScript')
+    addCandidatesToTable(newTbody, filteredCandidates)
+
+    document.body.appendChild(newCandidatesTable);
+
+  </script>
+</body>
+
+</html>
